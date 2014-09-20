@@ -1,0 +1,34 @@
+
+1. com.mj.msort.Sort is the main Sort API. It has 2 sort methods. One for Arrays and one of 
+   collections
+
+2. com.mj.msort.spi.SortProvider is the SPI.
+
+3. SPI providers need to implement Sort and SortProvider. 
+
+4. com.mj.msort.SortServices is a class that can discover and load SPI implementations and make them available
+to API users. It uses java.util.ServiceLoader to load SortProviders. Hence SortProvider also needs to be
+packaged as required by java.util.ServiceLoader for it to be discovered.
+
+I have also tested with SPI implementation is a separate jar.
+
+5. Implementations of BubbleSort and MergeSort are provided.
+
+6. Sample Usage
+
+Sort s = SortServices.getSort(...
+s.sort(...
+
+
+7. To Support Arrays and Lists, rather than have 1 implementation and make an extra copy of data 
+(for eg. have impl based on array. For List convert to array and back ), I have 2 implementations
+that - one operating on Array and another on List
+
+8. Comparisons are done using a caller provided Comparator. Generally Sort APIs will also support
+the use of Comparable. We could provide another sort method with no second parameter or say that 
+if Comparator is null, then we expect the type to implement Comparable. For simplicity, I have
+omitted Comparable. If required, it can be done.
+
+9. The zip file is an eclipse project. But it follows the maven structure and has a pom.xml.
+So you can build and run tests command line using Maven. 
+mvn clean test

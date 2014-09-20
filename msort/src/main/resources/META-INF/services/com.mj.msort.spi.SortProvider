@@ -1,0 +1,2 @@
+com.mj.msort.bubblesort.impl.BubbleSortProvider
+com.mj.msort.mergesort.impl.MergeSortProvider
