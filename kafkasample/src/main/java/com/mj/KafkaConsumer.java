@@ -33,7 +33,7 @@ public class KafkaConsumer {
         
         ConsumerConnector consumer = Consumer.createJavaConsumerConnector(cf) ;
         
-        String topic = "mytopic" ;
+        String topic = "mjtopic" ;
         
         Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
         topicCountMap.put(topic, new Integer(1));
