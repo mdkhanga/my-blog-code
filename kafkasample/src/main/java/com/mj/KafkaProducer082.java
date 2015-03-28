@@ -1,12 +1,15 @@
 package com.mj;
 
 
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer ;
 // import kafka.producer.KeyedMessage;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 public class KafkaProducer082 {
 
@@ -32,15 +35,32 @@ public class KafkaProducer082 {
 		
 		
 		for (int i = 1 ; i <= 1000000 ; i++) {
-			
-			String msg = date + " This is message " + i ;
-			System.out.println(msg) ;
-			
+
+      String msg = date + " This is message " + i  ;
+
 			ProducerRecord<String, String> data = new ProducerRecord<String, String>(topic, String.valueOf(i), msg);
 			 
-			producer.send(data);
-			
-			
+			Future<RecordMetadata> rs = producer.send(data, new Callback() {
+        @Override
+        public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+
+          System.out.println("Received ack for partition=" + recordMetadata.partition() + " offset = " + recordMetadata.offset()) ;
+        }
+      });
+
+
+      try {
+        RecordMetadata rm = rs.get();
+
+        msg = msg + "  partition = " + rm.partition() +  " offset =" + rm.offset() ;
+        System.out.println(msg) ;
+
+
+      } catch(Exception e) {
+        System.out.println(e) ;
+      }
+
+
 		}
 		
 		producer.close();
