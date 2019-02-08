@@ -1,0 +1,31 @@
+
+databaseUrl : mongodb://localhost:27017
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 9080
+
+  adminConnectors:
+    - type: http
+      port: 9081
+
+  requestLog:
+        appenders:
+          - type: file
+            currentLogFilename: ./logs/request.log
+            archivedLogFilenamePattern: ./logs/request-%d.log.gz
+            archivedFileCount: 5
+            timeZone: UTC
+
+
+logging:
+  appenders:
+
+    - type: console
+
+    - type: file
+      currentLogFilename: ./logs/apiserver.log
+      archivedLogFilenamePattern: ./logs/apiserver-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC

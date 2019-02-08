@@ -4,3 +4,7 @@
 .idea
 target
 *.iml
+*.class
+logs
+*.log
+*.iml
